@@ -87,7 +87,7 @@ jobs:
         run: |
           # ใช้ค่าพอร์ตจาก .env.example
           STUDENT_NAME=${{ env.STUDENT_NAME }} \
-          STUDENT_PORT=$(grep '^STUDENT_PORT=' .env.example | cut -d '=' -f2 | tr -d '\r ' || echo "80") \
+          STUDENT_PORT=$(grep '^STUDENT_PORT=' .env.example | cut -d '=' -f2 | tr -d '\r\n ' | grep -E '^[0-9]+$' || echo "80") \
           docker compose -p ${{ env.STUDENT_NAME }} up -d --build --force-recreate
 
       - name: Laravel Post-Deploy
