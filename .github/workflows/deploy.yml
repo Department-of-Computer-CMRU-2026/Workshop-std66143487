@@ -77,9 +77,10 @@ jobs:
       - name: Stop Existing Containers
         run: |
           STUDENT_NAME=${{ env.STUDENT_NAME }}
-          # หยุดและลบ container เก่าที่อาจค้างอยู่ (ไม่ว่าจะสร้างจาก project ใด)
-          docker stop ${STUDENT_NAME}-app ${STUDENT_NAME}-nginx ${STUDENT_NAME}-db 2>/dev/null || true
-          docker rm   ${STUDENT_NAME}-app ${STUDENT_NAME}-nginx ${STUDENT_NAME}-db 2>/dev/null || true
+          # หยุดและลบ containers ทุกตัวที่มีชื่อขึ้นต้นด้วย STUDENT_NAME (substring match)
+          # ครอบคลุมทั้งชื่อปกติและชื่อที่อาจ double จากการ deploy ที่ผิดพลาดก่อนหน้า
+          docker ps -q --filter "name=${STUDENT_NAME}" | xargs -r docker stop 2>/dev/null || true
+          docker ps -aq --filter "name=${STUDENT_NAME}" | xargs -r docker rm 2>/dev/null || true
           # ลบ compose project เก่าถ้ายังมี (orphan cleanup)
           docker compose -p ${STUDENT_NAME} down --remove-orphans 2>/dev/null || true
 
