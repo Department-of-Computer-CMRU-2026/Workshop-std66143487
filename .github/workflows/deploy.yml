@@ -13,9 +13,9 @@ jobs:
         run: |
           # Try to get STUDENT_ID from .env.example if it exists (prioritize repo config)
           if [ -f .env.example ]; then
-            export STUDENT_ID=$(grep '^STUDENT_ID=' .env.example | cut -d '=' -f2 | tr -d '\r ')
+            export STUDENT_ID=$(grep '^STUDENT_ID=' .env.example | cut -d '=' -f2 | tr -d '\r\n ')
           elif [ -f .env ]; then
-             export STUDENT_ID=$(grep '^STUDENT_ID=' .env | cut -d '=' -f2 | tr -d '\r ')
+             export STUDENT_ID=$(grep '^STUDENT_ID=' .env | cut -d '=' -f2 | tr -d '\r\n ')
           fi
           
           if [ ! -z "$STUDENT_ID" ]; then
@@ -24,7 +24,7 @@ jobs:
             export STUDENT_NAME=$(whoami)
           fi
           
-          echo "STUDENT_NAME=${STUDENT_NAME}" >> $GITHUB_ENV
+          printf 'STUDENT_NAME=%s\n' "${STUDENT_NAME}" >> $GITHUB_ENV
           mkdir -p /tmp/env-backups/${STUDENT_NAME}
           echo "BACKUP_DIR=/tmp/env-backups/${STUDENT_NAME}" >> $GITHUB_ENV
 
