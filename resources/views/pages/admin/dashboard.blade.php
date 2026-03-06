@@ -39,8 +39,8 @@ new #[Title('Admin Dashboard')] class extends Component {
         </flux:card>
 
         <flux:card class="flex flex-col items-center justify-center p-6">
-            <flux:heading size="sm" class="text-gray-500 uppercase tracking-wider">{{ __('Remaining Seats') }}</flux:heading>
-            <flux:text size="xl" class="font-bold text-green-500">{{ $total_seats - $total_registrations }}</flux:text>
+            <flux:heading size="sm" class="text-gray-500 uppercase tracking-wider">{{ __('Registration Progress') }}</flux:heading>
+            <flux:text size="xl" class="font-bold text-green-500">{{ $total_registrations }} / {{ $total_seats }}</flux:text>
         </flux:card>
     </div>
 
@@ -53,7 +53,7 @@ new #[Title('Admin Dashboard')] class extends Component {
                     <th scope="col" class="px-6 py-3 font-medium">{{ __('Activity') }}</th>
                     <th scope="col" class="px-6 py-3 font-medium">{{ __('Status') }}</th>
                     <th scope="col" class="px-6 py-3 font-medium">{{ __('Registrations') }}</th>
-                    <th scope="col" class="px-6 py-3 font-medium">{{ __('Seats Left') }}</th>
+                    <th scope="col" class="px-6 py-3 font-medium">{{ __('Total Seats') }}</th>
                     <th scope="col" class="px-6 py-3 font-medium">{{ __('Progress') }}</th>
                 </tr>
             </thead>
@@ -69,7 +69,7 @@ new #[Title('Admin Dashboard')] class extends Component {
                             @endif
                         </td>
                         <td class="px-6 py-4 text-zinc-500 dark:text-zinc-400">{{ $activity->registrations_count }}</td>
-                        <td class="px-6 py-4 text-zinc-500 dark:text-zinc-400">{{ $activity->remaining_seats }}</td>
+                        <td class="px-6 py-4 text-zinc-500 dark:text-zinc-400">{{ $activity->total_seats }}</td>
                         <td class="px-6 py-4">
                             <div class="w-full bg-gray-200 dark:bg-neutral-700 rounded-full h-2">
                                 <div class="bg-blue-600 h-2 rounded-full" style="width: {{ $activity->total_seats > 0 ? ($activity->registrations_count / $activity->total_seats * 100) : 0 }}%"></div>

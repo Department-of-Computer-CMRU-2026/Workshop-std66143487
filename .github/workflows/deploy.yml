@@ -106,6 +106,7 @@ jobs:
           # 🟢 3. รันคำสั่งอื่น ๆ ตามลำดับ
           docker exec $APP_CONTAINER php artisan key:generate --force
           docker exec $APP_CONTAINER php artisan migrate --force
+          docker exec $APP_CONTAINER php artisan db:seed --force || true
           docker exec $APP_CONTAINER php artisan storage:link || true
           
       - name: System Cleanup

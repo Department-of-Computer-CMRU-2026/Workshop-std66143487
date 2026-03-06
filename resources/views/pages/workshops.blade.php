@@ -99,10 +99,7 @@ new #[Title('Workshops')] class extends Component {
                         <div class="flex items-center gap-2 text-gray-500">
                             <flux:icon.users size="sm" />
                             <flux:text size="sm">
-                                {{ __('Seats: :remaining / :total remaining', [
-                                    'remaining' => $activity->remaining_seats,
-                                    'total' => $activity->total_seats
-                                ]) }}
+                                REGISTERED: {{ $activity->registrations_count }} / {{ $activity->total_seats }}
                             </flux:text>
                         </div>
                     </div>
